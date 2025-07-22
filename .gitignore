@@ -1,0 +1,7 @@
+﻿ClientServerTask/Library
+ClientServerTask/Temp
+*.csproj
+ClientServerTask/UserSettings
+*.vsconfig
+ClientServerTask/ClientServerTask.sln
+ClientServerTask/Logs
