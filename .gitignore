@@ -5,3 +5,5 @@ ClientServerTask/UserSettings
 *.vsconfig
 ClientServerTask/ClientServerTask.sln
 ClientServerTask/Logs
+ClientServerTask/.vs
+ClientServerTask/obj
