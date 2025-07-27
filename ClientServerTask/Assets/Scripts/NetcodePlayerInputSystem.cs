@@ -37,12 +37,17 @@ partial struct NetcodePlayerInputSystem : ISystem
             }
 
             netcodePlayerInput.ValueRW.inputVector = inputVector;
+
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.Space))
+            {
+                netcodePlayerInput.ValueRW.shoot.Set();
+            }else
+            {
+                netcodePlayerInput.ValueRW.shoot = default;
+            }
+
         }
     }
 
-    [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {
-        
-    }
+  
 }

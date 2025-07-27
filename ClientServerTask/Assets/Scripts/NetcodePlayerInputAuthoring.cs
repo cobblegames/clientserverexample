@@ -20,4 +20,5 @@ public struct NetcodePlayerInput : IInputComponentData
 {
 
     public float2 inputVector;
+    public InputEvent shoot;
 }

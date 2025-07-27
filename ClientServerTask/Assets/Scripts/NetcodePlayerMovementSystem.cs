@@ -6,11 +6,7 @@ using Unity.Mathematics;
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 partial struct NetcodePlayerMovementSystem : ISystem
 {
-    [BurstCompile]
-    public void OnCreate(ref SystemState state)
-    {
-        
-    }
+   
 
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
@@ -23,9 +19,5 @@ partial struct NetcodePlayerMovementSystem : ISystem
         }
     }
 
-    [BurstCompile]
-    public void OnDestroy(ref SystemState state)
-    {
-        
-    }
+    
 }
