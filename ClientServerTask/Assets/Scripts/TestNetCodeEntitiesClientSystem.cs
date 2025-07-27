@@ -17,14 +17,15 @@ partial struct TestNetCodeEntitiesClientSystem : ISystem
     {
         if(Input.GetKeyDown(KeyCode.T))
         {
+
          Entity rpcEntity  =  state.EntityManager.CreateEntity();
             state.EntityManager.AddComponentData(rpcEntity, new SimpleRPC
             {
-                value = Random.Range(0, 100)
+                value = 56
             });
 
             state.EntityManager.AddComponentData(rpcEntity, new SendRpcCommandRequest()); // send rpc to server
-            Debug.Log($"Sent RPC with value: {state.EntityManager.GetComponentData<SimpleRPC>(rpcEntity).value}");
+            Debug.Log("Sent RPC");
         }
     }
 

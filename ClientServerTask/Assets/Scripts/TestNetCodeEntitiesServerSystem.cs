@@ -17,6 +17,7 @@ partial struct TestNetCodeEntitiesServerSystem : ISystem
     {
 
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
+
         foreach ((
             RefRO<SimpleRPC> simpleRPC, 
             RefRO<ReceiveRpcCommandRequest> receiveRpcCommandRequest,
@@ -27,8 +28,8 @@ partial struct TestNetCodeEntitiesServerSystem : ISystem
                 RefRO<ReceiveRpcCommandRequest>>().WithEntityAccess()) 
         {
          
-        //   UnityEngine.Debug.Log($"Received RPC with value: {simpleRPC.ValueRO.value}");
-           entityCommandBuffer.DestroyEntity(entity); // Destroy the entity after processing the RPC
+             UnityEngine.Debug.Log("Received RPC");
+             entityCommandBuffer.DestroyEntity(entity); // Destroy the entity after processing the RPC
         }
 
         entityCommandBuffer.Playback(state.EntityManager);
