@@ -5,7 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 
 [UpdateInGroup(typeof(GhostInputSystemGroup))]
-partial struct NetcodePlayerInputSystem : ISystem
+internal partial struct NetcodePlayerInputSystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)
@@ -17,7 +17,7 @@ partial struct NetcodePlayerInputSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-       foreach(RefRW<NetcodePlayerInput> netcodePlayerInput in SystemAPI.Query<RefRW<NetcodePlayerInput>>().WithAll<GhostOwnerIsLocal>())
+        foreach (RefRW<NetcodePlayerInput> netcodePlayerInput in SystemAPI.Query<RefRW<NetcodePlayerInput>>().WithAll<GhostOwnerIsLocal>())
         {
             float2 inputVector = new float2();
             Quaternion rotation = Quaternion.identity;
@@ -26,7 +26,6 @@ partial struct NetcodePlayerInputSystem : ISystem
                 Debug.Log("W Key Pressed");
                 inputVector.y += 1f;
                 rotation = Quaternion.Euler(0, 0, 0);
-
             }
             if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.S))
             {
@@ -58,11 +57,6 @@ partial struct NetcodePlayerInputSystem : ISystem
 
             netcodePlayerInput.ValueRW.inputVector = inputVector;
             netcodePlayerInput.ValueRW.rotation = rotation;
-
-         
-
         }
     }
-
-  
 }

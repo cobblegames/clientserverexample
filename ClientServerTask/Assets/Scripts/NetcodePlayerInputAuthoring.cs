@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.NetCode;
 using Unity.Mathematics;
 using Unity.Entities;
+
 public class NetcodePlayerInputAuthoring : MonoBehaviour
 {
     public class Baker : Baker<NetcodePlayerInputAuthoring>
@@ -10,10 +11,8 @@ public class NetcodePlayerInputAuthoring : MonoBehaviour
         {
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new NetcodePlayerInput());
-          
         }
     }
-
 }
 
 public struct NetcodePlayerInput : IInputComponentData

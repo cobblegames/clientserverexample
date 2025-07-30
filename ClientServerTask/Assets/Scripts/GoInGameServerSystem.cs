@@ -1,14 +1,12 @@
-
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.NetCode;
 using Unity.Transforms;
-using UnityEngine; 
+using UnityEngine;
 
 [WorldSystemFilter(WorldSystemFilterFlags.ServerSimulation)]
-partial struct GoInGameServerSystem : ISystem
+internal partial struct GoInGameServerSystem : ISystem
 {
-
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<EntitiesReference>();
@@ -22,16 +20,14 @@ partial struct GoInGameServerSystem : ISystem
 
         foreach ((RefRO<ReceiveRpcCommandRequest> receiveRpcCommandRequest, Entity entity) in SystemAPI.Query<RefRO<ReceiveRpcCommandRequest>>().WithAll<GoInGameRequestRPC>().WithEntityAccess())
         {
-            entityCommandBuffer.AddComponent<NetworkStreamInGame>(receiveRpcCommandRequest.ValueRO.SourceConnection); 
+            entityCommandBuffer.AddComponent<NetworkStreamInGame>(receiveRpcCommandRequest.ValueRO.SourceConnection);
             UnityEngine.Debug.Log("Client Connected to Server");
-          
 
             Entity playerEntity = entityCommandBuffer.Instantiate(entitiesReference.playerPrefabEntity);
-         
-            entityCommandBuffer.SetComponent(playerEntity, LocalTransform.FromPosition(new float3(UnityEngine.Random.Range(-10,10),0,0))); 
-            
-            NetworkId networkId = SystemAPI.GetComponent<NetworkId>(receiveRpcCommandRequest.ValueRO.SourceConnection);
 
+            entityCommandBuffer.SetComponent(playerEntity, LocalTransform.FromPosition(new float3(UnityEngine.Random.Range(-10, 10), 0, 0)));
+
+            NetworkId networkId = SystemAPI.GetComponent<NetworkId>(receiveRpcCommandRequest.ValueRO.SourceConnection);
 
             entityCommandBuffer.AddComponent(playerEntity, new GhostOwner
             {
@@ -40,11 +36,9 @@ partial struct GoInGameServerSystem : ISystem
 
             entityCommandBuffer.AppendToBuffer(receiveRpcCommandRequest.ValueRO.SourceConnection, new LinkedEntityGroup { Value = playerEntity });
 
-            entityCommandBuffer.DestroyEntity(entity); 
-
+            entityCommandBuffer.DestroyEntity(entity);
         }
 
         entityCommandBuffer.Playback(state.EntityManager);
     }
-
 }

@@ -1,9 +1,11 @@
 using UnityEngine;
 using Unity.Entities;
+
 public class EntitiesReferenceAuthoring : MonoBehaviour
 {
     public GameObject playerPrefabGameObject;
     public GameObject bulletPrefabGameObject;
+
     public class Baker : Baker<EntitiesReferenceAuthoring>
     {
         public override void Bake(EntitiesReferenceAuthoring authoring)
