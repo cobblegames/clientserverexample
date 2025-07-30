@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefabGameObject: {fileID: 7095392775549432137, guid: c79c565c88d7f504b9b8638369967316, type: 3}
-  bulletPrefabGameObject: {fileID: 0}
+  bulletPrefabGameObject: {fileID: 1584483979735393106, guid: cea1c22250544044da64b4d4090e741e, type: 3}
 --- !u!4 &652158393
 Transform:
   m_ObjectHideFlags: 0
