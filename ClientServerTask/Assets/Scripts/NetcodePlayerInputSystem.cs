@@ -2,6 +2,7 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.NetCode;
 using Unity.Mathematics;
+using UnityEngine;
 
 [UpdateInGroup(typeof(GhostInputSystemGroup))]
 partial struct NetcodePlayerInputSystem : ISystem
@@ -19,32 +20,46 @@ partial struct NetcodePlayerInputSystem : ISystem
        foreach(RefRW<NetcodePlayerInput> netcodePlayerInput in SystemAPI.Query<RefRW<NetcodePlayerInput>>().WithAll<GhostOwnerIsLocal>())
         {
             float2 inputVector = new float2();
-            if(UnityEngine.Input.GetKey(UnityEngine.KeyCode.W))
+            Quaternion rotation = Quaternion.identity;
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.W))
             {
+                Debug.Log("W Key Pressed");
                 inputVector.y += 1f;
+                rotation = Quaternion.Euler(0, 0, 0);
+
             }
             if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.S))
             {
+                Debug.Log("S Key Pressed");
                 inputVector.y -= 1f;
+                rotation = Quaternion.Euler(0, 180, 0);
             }
             if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.A))
             {
+                Debug.Log("A Key Pressed");
                 inputVector.x -= 1f;
+                rotation = Quaternion.Euler(0, 270, 0);
             }
             if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.D))
             {
+                UnityEngine.Debug.Log("D Key Pressed");
                 inputVector.x += 1f;
+                rotation = Quaternion.Euler(0, 90, 0);
             }
 
-            netcodePlayerInput.ValueRW.inputVector = inputVector;
-
-            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.Space))
+            if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.Space))
             {
                 netcodePlayerInput.ValueRW.shoot.Set();
-            }else
+            }
+            else
             {
                 netcodePlayerInput.ValueRW.shoot = default;
             }
+
+            netcodePlayerInput.ValueRW.inputVector = inputVector;
+            netcodePlayerInput.ValueRW.rotation = rotation;
+
+         
 
         }
     }

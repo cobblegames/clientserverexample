@@ -3,6 +3,7 @@ using Unity.Entities;
 using Unity.NetCode;
 using Unity.Transforms;
 using Unity.Mathematics;
+using System.Numerics;
 [UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
 partial struct NetcodePlayerMovementSystem : ISystem
 {
@@ -15,7 +16,9 @@ partial struct NetcodePlayerMovementSystem : ISystem
        {
             float moveSpeed = 5f;   
             float3 moveVector = new float3(netcodePlayerInput.ValueRO.inputVector.x, 0f, netcodePlayerInput.ValueRO.inputVector.y);
+      
             localTransform.ValueRW.Position += moveVector * moveSpeed * SystemAPI.Time.DeltaTime;
+            localTransform.ValueRW.Rotation = netcodePlayerInput.ValueRO.rotation;
         }
     }
 

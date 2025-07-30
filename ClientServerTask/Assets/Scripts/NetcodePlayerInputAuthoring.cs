@@ -18,7 +18,7 @@ public class NetcodePlayerInputAuthoring : MonoBehaviour
 
 public struct NetcodePlayerInput : IInputComponentData
 {
-
+    public Quaternion rotation;
     public float2 inputVector;
     public InputEvent shoot;
 }

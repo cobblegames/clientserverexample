@@ -18,7 +18,6 @@ partial struct GoInGameServerSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         EntityCommandBuffer entityCommandBuffer = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
-
         EntitiesReference entitiesReference = SystemAPI.GetSingleton<EntitiesReference>();
 
         foreach ((RefRO<ReceiveRpcCommandRequest> receiveRpcCommandRequest, Entity entity) in SystemAPI.Query<RefRO<ReceiveRpcCommandRequest>>().WithAll<GoInGameRequestRPC>().WithEntityAccess())
@@ -27,8 +26,9 @@ partial struct GoInGameServerSystem : ISystem
             UnityEngine.Debug.Log("Client Connected to Server");
           
 
-            Entity playerEntity = entityCommandBuffer.Instantiate(entitiesReference.playerPrefabEntity); // Instantiate the player prefab entity
-            entityCommandBuffer.SetComponent(playerEntity, LocalTransform.FromPosition(new float3(UnityEngine.Random.Range(-10,10),0,0))); // Set a random position for the player entity
+            Entity playerEntity = entityCommandBuffer.Instantiate(entitiesReference.playerPrefabEntity);
+         
+            entityCommandBuffer.SetComponent(playerEntity, LocalTransform.FromPosition(new float3(UnityEngine.Random.Range(-10,10),0,0))); 
             
             NetworkId networkId = SystemAPI.GetComponent<NetworkId>(receiveRpcCommandRequest.ValueRO.SourceConnection);
 
@@ -40,7 +40,7 @@ partial struct GoInGameServerSystem : ISystem
 
             entityCommandBuffer.AppendToBuffer(receiveRpcCommandRequest.ValueRO.SourceConnection, new LinkedEntityGroup { Value = playerEntity });
 
-            entityCommandBuffer.DestroyEntity(entity); // Destroy the entity after processing the RPC
+            entityCommandBuffer.DestroyEntity(entity); 
 
         }
 
